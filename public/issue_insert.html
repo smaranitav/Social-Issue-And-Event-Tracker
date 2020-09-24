@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="angular/angular.min.js"> </script>
+<style>
+body {
+      
+      font: 400 15px/1.8 Lato, sans-serif;
+      color: #777;
+      
+  }
+  h3, h4 {
+      margin: 10px 0 30px 0;
+      letter-spacing: 10px;
+      font-size: 20px;
+      color: #111;
+  }
+.btn {
+      padding: 10px 20px;
+      background-color: #333;
+      color: #f1f1f1;
+      border-radius: 0;
+      transition: .2s;
+      
+  }
+  .btn:hover, .btn:focus {
+      border: 1px solid #333;
+      background-color: #fff;
+      color: #000;
+  }
+list-group-item{
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+       color:#000000;
+  }
+ .class {
+    position: relative;
+ 
+    margin:15px 400px 10px 400px;
+}
+
+.thumbnail {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+}
+</style>
+<title>ISSUES AND THEIR DETAILS</title>
+</head>
+
+<script> var myModule = angular.module("myApp",[])  </script>
+<body ng-app="myApp">
+    <form ng-controller='appController' ng-submit="send()">
+      <!--send() function from the controller is called on form submission -->
+     <div class="class" >
+        <div class="thumbnail">
+		<label >Issue reporter: </label><br/>
+            <input type="text" id="e_name" ng-model="data.e_name" placeholder="Jack Stone" /> <br /><br/>
+
+        <label>Issue Occurence Time:</label><br />
+                <input type="text" id="e_time" ng-model="data.e_time" placeholder="10:50 pm" /> <br /><br/>
+
+	     <label >Issue Occurence Date: </label><br />
+	     <input type="date" id="e_date" ng-model="data.e_date" placeholder="dd/mm/yyyy" /> <br /><br/>
+	     <br /><br/>
+
+        <label>Issue description details:</label><br />
+        <input type="text" id="e_description" ng-model="data.e_description" /> <br /> <br />        
+        <button class="btn" type="submit" align="center" ng-click="Submit">INSERT</button>
+		<br>
+	<br>
+       <div><pre>{{response.data}}</pre>  </div>
+    </form>
+	
+<form action="communitypg.html" method="get">
+ <button class="btn" type="submit">BACK TO HOME PAGE</button>
+</form>
+<br>
+
+</div>
+</div>
+
+ <script>
+	 myModule.controller ("appController",
+        function appController($scope, $http) {
+            /*$http directive is used to communicate to the server */
+            $scope.data = {}
+            $scope.response = {}
+			
+            $scope.send = function () {
+                /*executed when submit is clicked*/          
+		                var posting = $http({
+			/*posting to /process_get  */
+                    //method: 'GET',
+                    //url: '/process_get',
+                    //params: $scope.data,
+			/*posting to /process_post*/
+                    method: 'POST',
+                    url: '/process_post',
+                    data: $scope.data,
+                    
+                }).then (function (response) {
+                    /*executed when server responds back*/
+                    console.log(response);
+                    $scope.response.data = response.data;
+                },function (error){
+					console.log(error);
+			});
+            }
+        });
+    </script>
+</body>
+</html>
+
