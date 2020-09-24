@@ -1,0 +1,11 @@
+List of Events
+  <ul class="events">
+  <% for(var i=0; i<events.length; i++) {%>
+    <li class="events">
+      <span><%= " Name: " +events[i].ename+"."%></span>
+      <span><%= " Description: " + events[i].edesc%></span>
+      <span><%= " Venue : " +events[i].evenue+"."%></span>
+      <span><%= " Date: " + events[i].edate%></span>
+    </li>
+  <% } %>
+</ul>
