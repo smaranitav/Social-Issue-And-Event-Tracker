@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="angular/angular.min.js"> </script>
+<style>
+body {
+      
+      font: 400 15px/1.8 Lato, sans-serif;
+      color: #777;
+      
+  }
+  
+.btn {
+      padding: 10px 20px;
+      background-color: #333;
+      color: #f1f1f1;
+      border-radius: 0;
+      transition: .2s;
+      
+  }
+  .btn:hover, .btn:focus {
+      border: 1px solid #333;
+      background-color: #fff;
+      color: #000;
+  }
+.class {
+    position: relative;
+ 
+    margin:15px 400px 10px 400px;
+}
+
+.thumbnail {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+}
+</style>
+<title>ISSUES AND THEIR DETAILS</title>
+</head>
+ 
+<body>  
+
+ <div class="class" >
+
+        <div class="thumbnail">
+<p>Search for the details of a particular issue in a community</p><br/>
+<br/>
+<form action="searchissue" method="get">  
+
+
+<label>Issue description:</label><br/>
+ <input type="text" name="issue_description">  <br/> <br/>
+<button class="btn" type="submit" align="center">SEARCH</button>
+		<br>
+	<br>
+</form>
+<form action="communitypg.html" method="get">
+ <button class="btn" type="submit">BACK TO HOME PAGE</button>
+</form>
+ 
+ </div>
+</div>
+
+</body>  
+</html>  
