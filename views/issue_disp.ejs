@@ -1,0 +1,11 @@
+List of Issues
+  <ul class="issues">
+  <% for(var i=0; i<issues.length; i++) {%>
+    <li class="issues">
+      <span><%= " Reporter Name: " +issues[i].reporter+"."%></span>
+      <span><%= " Assignee Name: " + issues[i].assignee%></span>
+      <span><%= " Issue Description: " +issues[i].description+"."%></span>
+      <span><%= " Issue Date: " + issues[i].date%></span>
+    </li>
+  <% } %>
+</ul>
