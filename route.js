@@ -22,6 +22,103 @@ app.get('/communitypg.html', function (req, res) {
 }) 
 /*JS client side files has to be placed under a folder by name 'public' */
 
+app.get('/issue_insert.html', function (req, res) {
+    res.sendFile( __dirname + "/" + "issue_insert.html" );
+})
+/* to access the posted data from client using request body (POST) or request params(GET) */
+//-----------------------POST METHOD-------------------------------------------------
+app.post('/process_post', function (req, res) {
+    /* Handling the AngularJS post request*/
+    console.log(req.body);
+	res.setHeader('Content-Type', 'text/html');
+    /*response has to be in the form of a JSON*/
+    req.body.serverMessage = "NodeJS replying to angular"
+        /*adding a new field to send it to the angular Client */
+		console.log("Sent data are (POST): Reporter :"+req.body.e_name+" Reported time :"+req.body.e_time+" Issue description :"+req.body.e_description+" Issue date :"+req.body.e_date);
+		// Submit to the DB
+  	var issue_reporter = req.body.e_name;
+  	var issue_time = req.body.e_time;
+  	var issue_description = req.body.e_description;
+  	var issue_date = req.body.e_date;
+  	var issue_assignee="John James"; //By default, issue is assigned to this person to resolve
+
+	db.collection('issues').insert({reporter:issue_reporter,time:issue_time,description:issue_description,date:issue_date,assignee:issue_assignee});
+    res.send('Issue Reported-->'+issue_reporter+' assignee is '+issue_assignee);
+    res.end();
+    /*Sending the respone back to the angular Client */
+});
+
+//--------------UPDATE------------------------------------------
+app.get('/issue_update.html', function (req, res) {
+    res.sendFile( __dirname + "/" + "issue_update.html" );
+})
+
+app.get("/updateissue", function(req, res) {
+  //update the assignee of the issue
+	var reporter_name=req.query.issue_reporter;
+	var assignee_name=req.query.issue_assignee;
+    
+	db.collection('issues', function (err, data) {
+        data.update({"reporter":reporter_name},{$set:{"assignee":assignee_name}},
+            function(err, result){
+				if (err) {
+					console.log("Failed to update data.");
+			} else {
+				res.send('<h4>Issue Record Updated for '+reporter_name+'<br> Issue Assigned to '+assignee_name+'</h4>');
+				console.log("Issue Updated")
+			}
+        });
+    });
+})	
+//--------------SEARCH------------------------------------------
+app.get('/issue_search.html', function (req, res) {  
+   res.sendFile( __dirname + "/" + "issue_search.html" );    
+})
+
+app.get("/searchissue", function(req, res) {
+	var issue_description=req.query.issue_description;
+    db.collection('issues').find({description:issue_description}).nextObject(function(err, doc) {
+    if (err) {
+      console.log(err.message+ "Failed to get data.");
+	res.send("No such issues found");
+    } else {
+	res.status(200).json(docs);
+      res.send("<h4>Issue name is "+doc.description+"<br>Assigned to "+doc.assignee);
+    }
+  });
+  });
+  
+
+//--------------DELETE------------------------------------------
+app.get('/issue_delete.html', function (req, res) {  
+   res.sendFile( __dirname + "/" + "issue_delete.html" );    
+})
+
+app.get("/deleteissue", function(req, res) {
+	var issue_description=req.query.issue_description;
+	db.collection('issues', function (err, data) {
+        data.remove({"description":issue_description}, function(err, result){
+				if (err) {
+					console.log("Failed to remove data.");
+			} else {
+				res.send('<h4>Issue Deleted for '+issue_description+'</h4>');
+				console.log("Issue Deleted")
+			}
+        });
+    });
+    
+  });
+
+
+app.get('/displayissues', function (req, res) { 
+//-------------DISPLAY USING EMBEDDED JS -----------
+ db.collection('issues').find().sort({issue:1}).toArray(
+ 		function(err , i){
+        if (err) return console.log(err)
+        res.render('issue_disp.ejs',{issues: i})  
+     })
+})
+
 app.get('/event_insert.html', function (req, res) {
     res.sendFile( __dirname + "/" + "event_insert.html" );
 })
